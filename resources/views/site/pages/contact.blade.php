@@ -18,7 +18,7 @@
                     </p>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item"><a href="{{ route('site.home') }}">Anasayfa</a></li>
+                            <li class="breadcrumb-item"><a href="index.html">Anasayfa</a></li>
                             <li class="breadcrumb-item active">İletişim</li>
                         </ol>
                     </nav>
@@ -39,11 +39,15 @@
                         </h2>
                         <p class="lead mb-5">
                             10+ yıllık deneyimimizle işletmenizin dijital dönüşümünde yanınızdayız.
+                            Projeniz hakkında konuşalım ve size en uygun çözümü sunalım.
                         </p>
 
+                        <!-- Contact Cards -->
                         <div class="contact-cards">
                             <div class="contact-info-card glass-effect" data-aos="fade-up" data-aos-delay="100">
-                                <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
                                 <div class="contact-details">
                                     <h4>Adresimiz</h4>
                                     <p>Maslak, Büyükdere Cad. No:255<br>Sarıyer, İstanbul, Türkiye</p>
@@ -51,7 +55,9 @@
                             </div>
 
                             <div class="contact-info-card glass-effect" data-aos="fade-up" data-aos-delay="200">
-                                <div class="contact-icon"><i class="fas fa-phone"></i></div>
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
                                 <div class="contact-details">
                                     <h4>Telefonlarımız</h4>
                                     <p>
@@ -62,7 +68,9 @@
                             </div>
 
                             <div class="contact-info-card glass-effect" data-aos="fade-up" data-aos-delay="300">
-                                <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
                                 <div class="contact-details">
                                     <h4>E-posta</h4>
                                     <p>
@@ -73,11 +81,30 @@
                             </div>
 
                             <div class="contact-info-card glass-effect" data-aos="fade-up" data-aos-delay="400">
-                                <div class="contact-icon"><i class="fas fa-clock"></i></div>
+                                <div class="contact-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
                                 <div class="contact-details">
                                     <h4>Çalışma Saatleri</h4>
-                                    <p>Pazartesi - Cuma: 09:00 - 18:00<br>Cumartesi: 10:00 - 16:00</p>
+                                    <p>
+                                        Pazartesi - Cuma: 09:00 - 18:00<br>
+                                        Cumartesi: 10:00 - 16:00<br>
+                                        Pazar: Kapalı
+                                    </p>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Social Links -->
+                        <div class="contact-social mt-5" data-aos="fade-up" data-aos-delay="500">
+                            <h4 class="mb-3">Sosyal Medya</h4>
+                            <div class="social-links">
+                                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
                             </div>
                         </div>
                     </div>
@@ -87,8 +114,7 @@
                 <div class="col-lg-7" data-aos="fade-left">
                     <div class="contact-form-wrapper glass-effect p-5">
                         <h3 class="mb-4">Mesaj Gönderin</h3>
-                        <form id="contactForm" class="contact-form" method="POST" action="#">
-                            @csrf
+                        <form id="contactForm" class="contact-form">
                             <div class="row g-4">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -97,6 +123,7 @@
                                         <i class="fas fa-user form-icon"></i>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Soyadınız *</label>
@@ -104,6 +131,7 @@
                                         <i class="fas fa-user form-icon"></i>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">E-posta *</label>
@@ -111,6 +139,7 @@
                                         <i class="fas fa-envelope form-icon"></i>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Telefon</label>
@@ -118,6 +147,7 @@
                                         <i class="fas fa-phone form-icon"></i>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Şirket</label>
@@ -125,6 +155,7 @@
                                         <i class="fas fa-building form-icon"></i>
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Hizmet Türü *</label>
@@ -140,6 +171,7 @@
                                         <i class="fas fa-briefcase form-icon"></i>
                                     </div>
                                 </div>
+
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label class="form-label">Mesajınız *</label>
@@ -147,6 +179,7 @@
                                         <i class="fas fa-comment form-icon"></i>
                                     </div>
                                 </div>
+
                                 <div class="col-12">
                                     <div class="form-check mb-4">
                                         <input class="form-check-input" type="checkbox" id="privacyCheck" required>
@@ -155,6 +188,7 @@
                                         </label>
                                     </div>
                                 </div>
+
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary-custom btn-lg w-100">
                                         <span>Mesajı Gönder</span>
@@ -173,12 +207,12 @@
     <section class="map-section" data-aos="fade-up">
         <div class="container-fluid p-0">
             <div class="map-wrapper glass-effect">
-                <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3007.875707778473!2d29.012623315397935!3d41.08572302542889!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab5f7e19e2b9b%3A0x2c0c8c7c6c0c8c7c!2sMaslak%2C%20B%C3%BCy%C3%BCkdere%20Cd.%2C%2034485%20Sar%C4%B1yer%2F%C4%B0stanbul!5e0!3m2!1str!2str!4v1620000000000!5m2!1str!2str" 
-                    width="100%" 
-                    height="500" 
-                    style="border:0;" 
-                    allowfullscreen="" 
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3007.875707778473!2d29.012623315397935!3d41.08572302542889!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab5f7e19e2b9b%3A0x2c0c8c7c6c0c8c7c!2sMaslak%2C%20B%C3%BCy%C3%BCkdere%20Cd.%2C%2034485%20Sar%C4%B1yer%2F%C4%B0stanbul!5e0!3m2!1str!2str!4v1620000000000!5m2!1str!2str"
+                    width="100%"
+                    height="500"
+                    style="border:0;"
+                    allowfullscreen=""
                     loading="lazy">
                 </iframe>
             </div>
@@ -198,6 +232,7 @@
             <div class="row">
                 <div class="col-lg-8 mx-auto">
                     <div class="accordion" id="faqAccordion">
+                        <!-- FAQ 1 -->
                         <div class="accordion-item glass-effect mb-3" data-aos="fade-up" data-aos-delay="100">
                             <h2 class="accordion-header">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
@@ -206,12 +241,13 @@
                             </h2>
                             <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body">
-                                    Proje süresi, projenin kapsamına ve karmaşıklığına göre değişir. Basit bir web sitesi 2-4 hafta, 
-                                    karmaşık bir yazılım projesi ise 3-6 ay sürebilir.
+                                    Proje süresi, projenin kapsamına ve karmaşıklığına göre değişir. Basit bir web sitesi 2-4 hafta,
+                                    karmaşık bir yazılım projesi ise 3-6 ay sürebilir. İlk görüşmede size detaylı bir zaman planı sunuyoruz.
                                 </div>
                             </div>
                         </div>
 
+                        <!-- FAQ 2 -->
                         <div class="accordion-item glass-effect mb-3" data-aos="fade-up" data-aos-delay="200">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
@@ -220,21 +256,53 @@
                             </h2>
                             <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body">
-                                    Fiyatlandırma, projenin kapsamı, kullanılacak teknolojiler ve süreye göre belirlenir. 
-                                    Her proje için özel teklif hazırlıyoruz.
+                                    Fiyatlandırma, projenin kapsamı, kullanılacak teknolojiler ve süreye göre belirlenir.
+                                    Her proje için özel teklif hazırlıyoruz. Ücretsiz ön görüşme için bize ulaşabilirsiniz.
                                 </div>
                             </div>
                         </div>
 
+                        <!-- FAQ 3 -->
                         <div class="accordion-item glass-effect mb-3" data-aos="fade-up" data-aos-delay="300">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                                    Proje sonrası destek veriyor musunuz?
+                                    Hangi teknolojileri kullanıyorsunuz?
                                 </button>
                             </h2>
                             <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body">
+                                    React, Vue.js, Angular, Node.js, Python, Django, Flutter, React Native ve daha birçok modern
+                                    teknoloji ile çalışıyoruz. Projenize en uygun teknoloji yığınını birlikte belirliyoruz.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 4 -->
+                        <div class="accordion-item glass-effect mb-3" data-aos="fade-up" data-aos-delay="400">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    Proje sonrası destek veriyor musunuz?
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
                                     Evet, tüm projelerimiz için 1 yıl ücretsiz teknik destek ve bakım hizmeti sunuyoruz.
+                                    İsterseniz uzun vadeli destek paketlerimizden de faydalanabilirsiniz.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- FAQ 5 -->
+                        <div class="accordion-item glass-effect" data-aos="fade-up" data-aos-delay="500">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                    Uzaktan çalışabiliyor musunuz?
+                                </button>
+                            </h2>
+                            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Evet, Türkiye'nin her yerinden ve yurtdışından müşterilerimizle online olarak çalışabiliyoruz.
+                                    Video görüşmeler, proje yönetim araçları ve düzenli raporlamalarla süreçleri yönetiyoruz.
                                 </div>
                             </div>
                         </div>

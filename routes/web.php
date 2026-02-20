@@ -28,9 +28,13 @@ Route::get('/portfolyo', function () {
     return view('site.pages.portfolio');
 })->name('site.portfolio');
 
-Route::get('/portfolyo/{slug}', function ($slug) {
-    return view('site.pages.portfolio-detail', ['slug' => $slug]);
+Route::get('/portfolyo/detail', function () {
+    return view('site.pages.portfolio-detail');
 })->name('site.portfolio.detail');
+//
+//Route::get('/portfolyo/{slug}', function ($slug) {
+//    return view('site.pages.portfolio-detail', ['slug' => $slug]);
+//})->name('site.portfolio.detail');
 
 // References Page
 Route::get('/referanslar', function () {
