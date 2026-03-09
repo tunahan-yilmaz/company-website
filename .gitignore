@@ -4,5 +4,6 @@
 /storage/*.key
 /public/storage
 /theme
+/panel
 .DS_Store
 .idea
