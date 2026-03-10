@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\AboutController;
 use App\Http\Controllers\Admin\TeamController;
 use App\Http\Controllers\Admin\TimelineController;
 use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\FaqController;
 
 /*
 |--------------------------------------------------------------------------
@@ -113,6 +114,9 @@ Route::middleware(['admin.auth'])->prefix('yonetim')->group(function () {
     // About (single record — index shows edit form)
     Route::get('about', [AboutController::class, 'index'])->name('about.index');
     Route::put('about/{about}', [AboutController::class, 'update'])->name('about.update');
+
+    // FAQ (Sık Sorulan Sorular)
+    Route::resource('faqs', FaqController::class)->names('faqs');
 
     // Settings (single record)
     Route::get('settings', [SettingsController::class, 'index'])->name('settings.index');

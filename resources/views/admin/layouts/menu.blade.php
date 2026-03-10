@@ -24,6 +24,12 @@
                     <li>
                         <a href="{{ route('about.index') }}">Hakkımızda</a>
                     </li>
+                    <li>
+                        <a href="{{ route('faqs.index') }}">SSS</a>
+                    </li>
+                    <li>
+                        <a href="{{ route('faqs.create') }}">SSS Ekle</a>
+                    </li>
                 </ul>
             </li>
 
