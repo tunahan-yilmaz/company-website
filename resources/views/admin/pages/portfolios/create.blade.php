@@ -348,9 +348,14 @@
                     </div>
                     <hr>
                     <div class="widget-content widget-content-area">
-                        <input type="file" form="mainForm" name="gallery_images[]" class="form-control" accept="image/*"
-                            multiple>
-                        <small class="text-muted d-block mt-2">Birden fazla görsel seçebilirsiniz (max. 5 adet)</small>
+                        <div class="custom-file-container" data-upload-id="portfolio-gallery">
+                            <label>Çoklu Görsel Yükle <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Temizle">x</a></label>
+                            <label class="custom-file-container__custom-file">
+                                <input type="file" form="mainForm" name="gallery_images[]" class="custom-file-container__custom-file__custom-file-input" accept="image/*" multiple>
+                                <span class="custom-file-container__custom-file__custom-file-control"></span>
+                            </label>
+                            <div class="custom-file-container__image-preview"></div>
+                        </div>
                     </div>
                 </div>
             </div>

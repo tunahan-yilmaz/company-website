@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
+// Admin Controllers
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Admin\SliderController;
 use App\Http\Controllers\Admin\ServiceController;
@@ -15,47 +17,32 @@ use App\Http\Controllers\Admin\TimelineController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\FaqController;
 
+// Site Controllers
+use App\Http\Controllers\Site\HomeController;
+use App\Http\Controllers\Site\AboutController as SiteAboutController;
+use App\Http\Controllers\Site\ServiceController as SiteServiceController;
+use App\Http\Controllers\Site\PortfolioController as SitePortfolioController;
+use App\Http\Controllers\Site\ReferenceController as SiteReferenceController;
+use App\Http\Controllers\Site\ContactController as SiteContactController;
+use App\Http\Controllers\Site\BlogController as SiteBlogController;
+
 /*
 |--------------------------------------------------------------------------
-| Site Routes
+| Site (Public) Routes
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', function () {
-    return view('site.pages.index');
-})->name('site.home');
-
-Route::get('/hakkimizda', function () {
-    return view('site.pages.about');
-})->name('site.about');
-
-Route::get('/hizmetlerimiz', function () {
-    return view('site.pages.services');
-})->name('site.services');
-
-Route::get('/portfolyo', function () {
-    return view('site.pages.portfolio');
-})->name('site.portfolio');
-
-Route::get('/portfolyo/detail', function () {
-    return view('site.pages.portfolio-detail');
-})->name('site.portfolio.detail');
-
-Route::get('/referanslar', function () {
-    return view('site.pages.references');
-})->name('site.references');
-
-Route::get('/blog', function () {
-    return view('site.pages.blog');
-})->name('site.blog');
-
-Route::get('/blog/detail', function () {
-    return view('site.pages.blog-detail');
-})->name('site.blog.detail');
-
-Route::get('/iletisim', function () {
-    return view('site.pages.contact');
-})->name('site.contact');
+Route::get('/', [HomeController::class, 'index'])->name('site.home');
+Route::get('/hakkimizda', [SiteAboutController::class, 'index'])->name('site.about');
+Route::get('/hizmetlerimiz', [SiteServiceController::class, 'index'])->name('site.services');
+Route::get('/hizmet/{slug}', [SiteServiceController::class, 'show'])->name('site.service.detail');
+Route::get('/portfolyo', [SitePortfolioController::class, 'index'])->name('site.portfolio');
+Route::get('/portfolyo/{slug}', [SitePortfolioController::class, 'show'])->name('site.portfolio.detail');
+Route::get('/referanslar', [SiteReferenceController::class, 'index'])->name('site.references');
+Route::get('/blog', [SiteBlogController::class, 'index'])->name('site.blog');
+Route::get('/blog/{slug}', [SiteBlogController::class, 'show'])->name('site.blog.detail');
+Route::get('/iletisim', [SiteContactController::class, 'index'])->name('site.contact');
+Route::post('/iletisim', [SiteContactController::class, 'store'])->name('site.contact.store');
 
 /*
 |--------------------------------------------------------------------------
@@ -111,7 +98,7 @@ Route::middleware(['admin.auth'])->prefix('yonetim')->group(function () {
     Route::get('contactMessages/{contactMessage}', [ContactMessageController::class, 'show'])->name('contactMessages.show');
     Route::delete('contactMessages/{contactMessage}', [ContactMessageController::class, 'destroy'])->name('contactMessages.destroy');
 
-    // About (single record — index shows edit form)
+    // About (single record)
     Route::get('about', [AboutController::class, 'index'])->name('about.index');
     Route::put('about/{about}', [AboutController::class, 'update'])->name('about.update');
 

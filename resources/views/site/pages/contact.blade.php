@@ -18,7 +18,7 @@
                     </p>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item"><a href="index.html">Anasayfa</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('site.home') }}">Anasayfa</a></li>
                             <li class="breadcrumb-item active">İletişim</li>
                         </ol>
                     </nav>
@@ -50,7 +50,7 @@
                                 </div>
                                 <div class="contact-details">
                                     <h4>Adresimiz</h4>
-                                    <p>Maslak, Büyükdere Cad. No:255<br>Sarıyer, İstanbul, Türkiye</p>
+                                    <p>{{ $settings?->address ?? 'Maslak, Büyükdere Cad. No:255, Sarıyer, İstanbul, Türkiye' }}</p>
                                 </div>
                             </div>
 
@@ -61,8 +61,14 @@
                                 <div class="contact-details">
                                     <h4>Telefonlarımız</h4>
                                     <p>
-                                        <a href="tel:+902121234567">+90 212 123 45 67</a><br>
-                                        <a href="tel:+905321234567">+90 532 123 45 67</a>
+                                        @if($settings?->phone)
+                                            <a href="tel:{{ preg_replace('/\s+/', '', $settings->phone) }}">{{ $settings->phone }}</a>
+                                        @else
+                                            +90 212 123 45 67
+                                        @endif
+                                        @if($settings?->whatsapp)
+                                            <br><a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $settings->whatsapp) }}" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                                        @endif
                                     </p>
                                 </div>
                             </div>
@@ -74,8 +80,11 @@
                                 <div class="contact-details">
                                     <h4>E-posta</h4>
                                     <p>
-                                        <a href="mailto:info@dbssoftware.com">info@dbssoftware.com</a><br>
-                                        <a href="mailto:support@dbssoftware.com">support@dbssoftware.com</a>
+                                        @if($settings?->email)
+                                            <a href="mailto:{{ $settings->email }}">{{ $settings->email }}</a>
+                                        @else
+                                            info@dbssoftware.com
+                                        @endif
                                     </p>
                                 </div>
                             </div>
@@ -99,12 +108,11 @@
                         <div class="contact-social mt-5" data-aos="fade-up" data-aos-delay="500">
                             <h4 class="mb-3">Sosyal Medya</h4>
                             <div class="social-links">
-                                <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                                <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
-                                <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-                                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                                @if($settings?->linkedin)<a href="{{ $settings->linkedin }}" target="_blank" class="social-link"><i class="fab fa-linkedin"></i></a>@endif
+                                @if($settings?->twitter)<a href="{{ $settings->twitter }}" target="_blank" class="social-link"><i class="fab fa-twitter"></i></a>@endif
+                                @if($settings?->instagram)<a href="{{ $settings->instagram }}" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>@endif
+                                @if($settings?->facebook)<a href="{{ $settings->facebook }}" target="_blank" class="social-link"><i class="fab fa-facebook"></i></a>@endif
+                                @if($settings?->youtube)<a href="{{ $settings->youtube }}" target="_blank" class="social-link"><i class="fab fa-youtube"></i></a>@endif
                             </div>
                         </div>
                     </div>
@@ -113,21 +121,25 @@
                 <!-- Contact Form -->
                 <div class="col-lg-7" data-aos="fade-left">
                     <div class="contact-form-wrapper glass-effect p-5">
+                        @if(session('success'))
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endif
                         <h3 class="mb-4">Mesaj Gönderin</h3>
-                        <form id="contactForm" class="contact-form">
+                        <form id="contactForm" class="contact-form" action="{{ route('site.contact.store') }}" method="POST">
+                            @csrf
                             <div class="row g-4">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Adınız *</label>
-                                        <input type="text" class="form-control" name="name" required>
+                                        <input type="text" class="form-control" name="name" value="{{ old('name') }}" required>
                                         <i class="fas fa-user form-icon"></i>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label">Soyadınız *</label>
-                                        <input type="text" class="form-control" name="surname" required>
+                                        <label class="form-label">Soyadınız</label>
+                                        <input type="text" class="form-control" name="surname" value="{{ old('surname') }}">
                                         <i class="fas fa-user form-icon"></i>
                                     </div>
                                 </div>
@@ -135,7 +147,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">E-posta *</label>
-                                        <input type="email" class="form-control" name="email" required>
+                                        <input type="email" class="form-control" name="email" value="{{ old('email') }}" required>
                                         <i class="fas fa-envelope form-icon"></i>
                                     </div>
                                 </div>
@@ -143,7 +155,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Telefon</label>
-                                        <input type="tel" class="form-control" name="phone">
+                                        <input type="tel" class="form-control" name="phone" value="{{ old('phone') }}">
                                         <i class="fas fa-phone form-icon"></i>
                                     </div>
                                 </div>
@@ -151,22 +163,22 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label class="form-label">Şirket</label>
-                                        <input type="text" class="form-control" name="company">
+                                        <input type="text" class="form-control" name="company" value="{{ old('company') }}">
                                         <i class="fas fa-building form-icon"></i>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label class="form-label">Hizmet Türü *</label>
-                                        <select class="form-control" name="service" required>
+                                        <label class="form-label">Hizmet Türü</label>
+                                        <select class="form-control" name="service">
                                             <option value="">Seçiniz</option>
-                                            <option value="software">Yazılım Geliştirme</option>
-                                            <option value="advertising">Dijital Reklam</option>
-                                            <option value="mobile">Mobil Uygulama</option>
-                                            <option value="design">UI/UX Tasarım</option>
-                                            <option value="cloud">Cloud & DevOps</option>
-                                            <option value="consulting">Dijital Danışmanlık</option>
+                                            <option value="Yazılım Geliştirme" {{ old('service') == 'Yazılım Geliştirme' ? 'selected' : '' }}>Yazılım Geliştirme</option>
+                                            <option value="Dijital Reklam" {{ old('service') == 'Dijital Reklam' ? 'selected' : '' }}>Dijital Reklam</option>
+                                            <option value="Mobil Uygulama" {{ old('service') == 'Mobil Uygulama' ? 'selected' : '' }}>Mobil Uygulama</option>
+                                            <option value="UI/UX Tasarım" {{ old('service') == 'UI/UX Tasarım' ? 'selected' : '' }}>UI/UX Tasarım</option>
+                                            <option value="Cloud & DevOps" {{ old('service') == 'Cloud & DevOps' ? 'selected' : '' }}>Cloud & DevOps</option>
+                                            <option value="Dijital Danışmanlık" {{ old('service') == 'Dijital Danışmanlık' ? 'selected' : '' }}>Dijital Danışmanlık</option>
                                         </select>
                                         <i class="fas fa-briefcase form-icon"></i>
                                     </div>
@@ -175,7 +187,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label class="form-label">Mesajınız *</label>
-                                        <textarea class="form-control" name="message" rows="6" required></textarea>
+                                        <textarea class="form-control" name="message" rows="6" required>{{ old('message') }}</textarea>
                                         <i class="fas fa-comment form-icon"></i>
                                     </div>
                                 </div>
@@ -208,7 +220,7 @@
         <div class="container-fluid p-0">
             <div class="map-wrapper glass-effect">
                 <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3007.875707778473!2d29.012623315397935!3d41.08572302542889!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab5f7e19e2b9b%3A0x2c0c8c7c6c0c8c7c!2sMaslak%2C%20B%C3%BCy%C3%BCkdere%20Cd.%2C%2034485%20Sar%C4%B1yer%2F%C4%B0stanbul!5e0!3m2!1str!2str!4v1620000000000!5m2!1str!2str"
+                    src="{{ $settings?->map_frame ?: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3007.875707778473!2d29.012623315397935!3d41.08572302542889!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab5f7e19e2b9b%3A0x2c0c8c7c6c0c8c7c!2sMaslak!5e0!3m2!1str!2str' }}"
                     width="100%"
                     height="500"
                     style="border:0;"
@@ -232,80 +244,24 @@
             <div class="row">
                 <div class="col-lg-8 mx-auto">
                     <div class="accordion" id="faqAccordion">
-                        <!-- FAQ 1 -->
-                        <div class="accordion-item glass-effect mb-3" data-aos="fade-up" data-aos-delay="100">
+                        @forelse($faqs as $i => $faq)
+                        <div class="accordion-item glass-effect mb-3" data-aos="fade-up" data-aos-delay="{{ ($i + 1) * 100 }}">
                             <h2 class="accordion-header">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                                    Proje süresi ne kadar?
+                                <button class="accordion-button {{ $i !== 0 ? 'collapsed' : '' }}" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#faq{{ $faq->id }}">
+                                    {{ $faq->question }}
                                 </button>
                             </h2>
-                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div id="faq{{ $faq->id }}" class="accordion-collapse collapse {{ $i === 0 ? 'show' : '' }}"
+                                data-bs-parent="#faqAccordion">
                                 <div class="accordion-body">
-                                    Proje süresi, projenin kapsamına ve karmaşıklığına göre değişir. Basit bir web sitesi 2-4 hafta,
-                                    karmaşık bir yazılım projesi ise 3-6 ay sürebilir. İlk görüşmede size detaylı bir zaman planı sunuyoruz.
+                                    {{ $faq->answer }}
                                 </div>
                             </div>
                         </div>
-
-                        <!-- FAQ 2 -->
-                        <div class="accordion-item glass-effect mb-3" data-aos="fade-up" data-aos-delay="200">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                                    Fiyatlandırma nasıl yapılıyor?
-                                </button>
-                            </h2>
-                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Fiyatlandırma, projenin kapsamı, kullanılacak teknolojiler ve süreye göre belirlenir.
-                                    Her proje için özel teklif hazırlıyoruz. Ücretsiz ön görüşme için bize ulaşabilirsiniz.
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- FAQ 3 -->
-                        <div class="accordion-item glass-effect mb-3" data-aos="fade-up" data-aos-delay="300">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                                    Hangi teknolojileri kullanıyorsunuz?
-                                </button>
-                            </h2>
-                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    React, Vue.js, Angular, Node.js, Python, Django, Flutter, React Native ve daha birçok modern
-                                    teknoloji ile çalışıyoruz. Projenize en uygun teknoloji yığınını birlikte belirliyoruz.
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- FAQ 4 -->
-                        <div class="accordion-item glass-effect mb-3" data-aos="fade-up" data-aos-delay="400">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
-                                    Proje sonrası destek veriyor musunuz?
-                                </button>
-                            </h2>
-                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Evet, tüm projelerimiz için 1 yıl ücretsiz teknik destek ve bakım hizmeti sunuyoruz.
-                                    İsterseniz uzun vadeli destek paketlerimizden de faydalanabilirsiniz.
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- FAQ 5 -->
-                        <div class="accordion-item glass-effect" data-aos="fade-up" data-aos-delay="500">
-                            <h2 class="accordion-header">
-                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
-                                    Uzaktan çalışabiliyor musunuz?
-                                </button>
-                            </h2>
-                            <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                                <div class="accordion-body">
-                                    Evet, Türkiye'nin her yerinden ve yurtdışından müşterilerimizle online olarak çalışabiliyoruz.
-                                    Video görüşmeler, proje yönetim araçları ve düzenli raporlamalarla süreçleri yönetiyoruz.
-                                </div>
-                            </div>
-                        </div>
+                        @empty
+                            <p class="text-center text-muted">Henüz soru eklenmemiş.</p>
+                        @endforelse
                     </div>
                 </div>
             </div>

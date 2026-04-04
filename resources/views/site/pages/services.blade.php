@@ -18,7 +18,7 @@
                     </p>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item"><a href="index.html">Anasayfa</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('site.home') }}">Ana Sayfa</a></li>
                             <li class="breadcrumb-item active">Hizmetlerimiz</li>
                         </ol>
                     </nav>
@@ -27,342 +27,117 @@
         </div>
     </section>
 
-    <!-- Services Overview -->
+    <!-- Services Overview (quick nav) -->
     <section class="services-overview section-padding">
         <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                    <a href="#software" class="service-overview-card glass-effect">
+            <div class="row g-4 justify-content-center">
+                @foreach($services as $i => $service)
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="{{ ($i % 3 + 1) * 100 }}">
+                    <a href="#service-{{ $service->slug }}" class="service-overview-card glass-effect">
                         <div class="service-overview-icon">
-                            <i class="fas fa-code"></i>
+                            <i class="{{ $service->icon ?? 'fas fa-cogs' }}"></i>
                         </div>
-                        <h3 class="service-overview-title">Yazılım Geliştirme</h3>
-                        <p class="service-overview-text">Özel ve kurumsal yazılım çözümleri</p>
+                        <h3 class="service-overview-title">{{ $service->title }}</h3>
+                        <p class="service-overview-text">{{ $service->short_description ?? Str::limit(strip_tags($service->description), 60) }}</p>
                         <span class="service-overview-arrow"><i class="fas fa-arrow-right"></i></span>
                     </a>
                 </div>
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <a href="#advertising" class="service-overview-card glass-effect">
-                        <div class="service-overview-icon">
-                            <i class="fas fa-bullhorn"></i>
-                        </div>
-                        <h3 class="service-overview-title">Dijital Reklam</h3>
-                        <p class="service-overview-text">Performans odaklı reklam kampanyaları</p>
-                        <span class="service-overview-arrow"><i class="fas fa-arrow-right"></i></span>
-                    </a>
-                </div>
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                    <a href="#mobile" class="service-overview-card glass-effect">
-                        <div class="service-overview-icon">
-                            <i class="fas fa-mobile-alt"></i>
-                        </div>
-                        <h3 class="service-overview-title">Mobil Uygulamalar</h3>
-                        <p class="service-overview-text">iOS ve Android uygulama geliştirme</p>
-                        <span class="service-overview-arrow"><i class="fas fa-arrow-right"></i></span>
-                    </a>
-                </div>
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                    <a href="#design" class="service-overview-card glass-effect">
-                        <div class="service-overview-icon">
-                            <i class="fas fa-paint-brush"></i>
-                        </div>
-                        <h3 class="service-overview-title">UI/UX Tasarım</h3>
-                        <p class="service-overview-text">Kullanıcı deneyimi odaklı tasarımlar</p>
-                        <span class="service-overview-arrow"><i class="fas fa-arrow-right"></i></span>
-                    </a>
-                </div>
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <a href="#cloud" class="service-overview-card glass-effect">
-                        <div class="service-overview-icon">
-                            <i class="fas fa-cloud"></i>
-                        </div>
-                        <h3 class="service-overview-title">Cloud & DevOps</h3>
-                        <p class="service-overview-text">Bulut altyapı ve sistem yönetimi</p>
-                        <span class="service-overview-arrow"><i class="fas fa-arrow-right"></i></span>
-                    </a>
-                </div>
-
-                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                    <a href="#consulting" class="service-overview-card glass-effect">
-                        <div class="service-overview-icon">
-                            <i class="fas fa-chart-line"></i>
-                        </div>
-                        <h3 class="service-overview-title">Dijital Danışmanlık</h3>
-                        <p class="service-overview-text">Strateji ve teknoloji danışmanlığı</p>
-                        <span class="service-overview-arrow"><i class="fas fa-arrow-right"></i></span>
-                    </a>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>
 
-    <!-- Software Development Service -->
-    <section class="service-detail section-padding bg-dark-alt" id="software">
+    <!-- Service Detail Sections -->
+    @foreach($services as $i => $service)
+    <section class="service-detail section-padding {{ $i % 2 == 0 ? 'bg-dark-alt' : '' }}" id="service-{{ $service->slug }}">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right">
+            <div class="row align-items-center {{ $i % 2 != 0 ? 'flex-lg-row-reverse' : '' }}">
+                <div class="col-lg-6 mb-5 mb-lg-0" data-aos="{{ $i % 2 == 0 ? 'fade-right' : 'fade-left' }}">
                     <div class="service-detail-img glass-effect">
-                        <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=700&q=80" alt="Yazılım Geliştirme" class="img-fluid rounded">
+                        <img src="{{ $service->image ? asset('storage/'.$service->image) : 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=700&q=80' }}" alt="{{ $service->title }}" class="img-fluid rounded">
                     </div>
                 </div>
-                <div class="col-lg-6" data-aos="fade-left">
+                <div class="col-lg-6" data-aos="{{ $i % 2 == 0 ? 'fade-left' : 'fade-right' }}">
                     <div class="service-detail-content">
-                        <span class="service-badge">Hizmet #1</span>
+                        <span class="service-badge">Hizmet #{{ $i + 1 }}</span>
                         <h2 class="service-detail-title">
-                            <span class="accent-text">Yazılım</span> Geliştirme
+                            @php
+                                $words = explode(' ', $service->title);
+                                $firstWord = array_shift($words);
+                                $rest = implode(' ', $words);
+                            @endphp
+                            <span class="accent-text">{{ $firstWord }}</span> {{ $rest }}
                         </h2>
-                        <p class="service-detail-text">
-                            Modern teknolojiler kullanarak işletmenizin ihtiyaçlarına özel, ölçeklenebilir ve
-                            güvenli yazılım çözümleri geliştiriyoruz. Web uygulamaları, kurumsal sistemler,
-                            API entegrasyonları ve daha fazlası.
-                        </p>
-
-                        <div class="service-features-list">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Web Uygulamaları (React, Vue, Angular)</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Backend Sistemler (Node.js, Python)</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>E-Ticaret Platformları</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Kurumsal Yazılımlar (ERP, CRM)</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>API Geliştirme & Entegrasyon</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Veritabanı Tasarımı</span>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="service-detail-text">
+                            @if($service->description)
+                                {!! nl2br(e($service->description)) !!}
+                            @else
+                                <p>{{ $service->short_description }}</p>
+                            @endif
                         </div>
 
+                        @if($service->features && count($service->features) > 0)
+                        <div class="service-features-list mt-4">
+                            <div class="row g-3">
+                                @foreach($service->features as $feature)
+                                <div class="col-md-6">
+                                    <div class="feature-item">
+                                        <i class="fas fa-check-circle accent-text"></i>
+                                        <span>{{ $feature }}</span>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
+
+                        @if($service->tech_stack && count($service->tech_stack) > 0)
                         <div class="service-tech-stack mt-4">
-                            <h5 class="mb-3">Kullandığımız Teknolojiler:</h5>
+                            <h5 class="mb-3">Kullanılan Teknolojiler:</h5>
                             <div class="tech-badges">
-                                <span class="tech-badge">React</span>
-                                <span class="tech-badge">Vue.js</span>
-                                <span class="tech-badge">Angular</span>
-                                <span class="tech-badge">Node.js</span>
-                                <span class="tech-badge">Python</span>
-                                <span class="tech-badge">Django</span>
-                                <span class="tech-badge">PHP</span>
-                                <span class="tech-badge">Laravel</span>
-                                <span class="tech-badge">PostgreSQL</span>
-                                <span class="tech-badge">MongoDB</span>
+                                @foreach($service->tech_stack as $tech)
+                                    <span class="tech-badge">{{ $tech }}</span>
+                                @endforeach
                             </div>
                         </div>
-
-                        <a href="contact.html" class="btn btn-primary-custom mt-4">
-                            <span>Teklif Alın</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Digital Advertising Service -->
-    <section class="service-detail section-padding" id="advertising">
-        <div class="container">
-            <div class="row align-items-center flex-lg-row-reverse">
-                <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-left">
-                    <div class="service-detail-img glass-effect">
-                        <img src="https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=700&q=80" alt="Dijital Reklam" class="img-fluid rounded">
-                    </div>
-                </div>
-                <div class="col-lg-6" data-aos="fade-right">
-                    <div class="service-detail-content">
-                        <span class="service-badge">Hizmet #2</span>
-                        <h2 class="service-detail-title">
-                            <span class="accent-text">Dijital</span> Reklam
-                        </h2>
-                        <p class="service-detail-text">
-                            Markanızı dijital dünyada öne çıkaran, hedef kitleye ulaşan ve ölçülebilir sonuçlar
-                            üreten reklam kampanyaları yönetiyoruz. Google Ads, sosyal medya reklamları, SEO ve
-                            içerik pazarlama stratejileri ile satışlarınızı artırıyoruz.
-                        </p>
-
-                        <div class="service-features-list">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Google Ads Yönetimi</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Facebook & Instagram Reklamları</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>LinkedIn Reklamları</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>SEO & SEM</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>İçerik Pazarlama</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>E-posta Pazarlama</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="service-process mt-4">
-                            <h5 class="mb-3">Çalışma Sürecimiz:</h5>
-                            <div class="process-steps">
-                                <div class="process-step">
-                                    <span class="process-number">1</span>
-                                    <span class="process-text">Hedef Kitle Analizi</span>
-                                </div>
-                                <div class="process-step">
-                                    <span class="process-number">2</span>
-                                    <span class="process-text">Strateji Geliştirme</span>
-                                </div>
-                                <div class="process-step">
-                                    <span class="process-number">3</span>
-                                    <span class="process-text">Kampanya Oluşturma</span>
-                                </div>
-                                <div class="process-step">
-                                    <span class="process-number">4</span>
-                                    <span class="process-text">Optimizasyon & Raporlama</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <a href="contact.html" class="btn btn-primary-custom mt-4">
-                            <span>Kampanya Başlat</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Mobile Development Service -->
-    <section class="service-detail section-padding bg-dark-alt" id="mobile">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right">
-                    <div class="service-detail-img glass-effect">
-                        <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=700&q=80" alt="Mobil Uygulamalar" class="img-fluid rounded">
-                    </div>
-                </div>
-                <div class="col-lg-6" data-aos="fade-left">
-                    <div class="service-detail-content">
-                        <span class="service-badge">Hizmet #3</span>
-                        <h2 class="service-detail-title">
-                            <span class="accent-text">Mobil</span> Uygulamalar
-                        </h2>
-                        <p class="service-detail-text">
-                            iOS ve Android platformları için kullanıcı dostu, performanslı ve modern mobil uygulamalar
-                            geliştiriyoruz. Native ve cross-platform teknolojileri kullanarak işinize özel mobil
-                            çözümler sunuyoruz.
-                        </p>
-
-                        <div class="service-features-list">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>iOS Uygulamaları (Swift)</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Android Uygulamaları (Kotlin)</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Cross-Platform (Flutter)</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>React Native Uygulamalar</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>UI/UX Tasarım</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>App Store & Play Store Yayınlama</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        @endif
+                        
+                        <!-- Added dynamically loaded custom stats here -->
+                        @if($service->result_1_value || $service->result_2_value)
                         <div class="service-stats mt-4">
                             <div class="row g-3">
+                                @if($service->result_1_value)
                                 <div class="col-6">
                                     <div class="stat-mini glass-effect">
-                                        <div class="stat-mini-number accent-text">50+</div>
-                                        <div class="stat-mini-label">Mobil Uygulama</div>
+                                        <div class="stat-mini-number accent-text">{{ $service->result_1_value }}</div>
+                                        <div class="stat-mini-label">{{ $service->result_1_label ?? 'Sonuç' }}</div>
                                     </div>
                                 </div>
+                                @endif
+                                @if($service->result_2_value)
                                 <div class="col-6">
                                     <div class="stat-mini glass-effect">
-                                        <div class="stat-mini-number accent-text">2M+</div>
-                                        <div class="stat-mini-label">Toplam İndirme</div>
+                                        <div class="stat-mini-number accent-text">{{ $service->result_2_value }}</div>
+                                        <div class="stat-mini-label">{{ $service->result_2_label ?? 'Sonuç' }}</div>
                                     </div>
                                 </div>
+                                @endif
+                                @if($service->result_3_value)
+                                <div class="col-6">
+                                    <div class="stat-mini glass-effect">
+                                        <div class="stat-mini-number accent-text">{{ $service->result_3_value }}</div>
+                                        <div class="stat-mini-label">{{ $service->result_3_label ?? 'Sonuç' }}</div>
+                                    </div>
+                                </div>
+                                @endif
                             </div>
                         </div>
+                        @else
+                        <!-- Or default static if no custom stat available for consistency with theme -->
+                        @endif
 
-                        <a href="contact.html" class="btn btn-primary-custom mt-4">
-                            <span>Uygulama Geliştir</span>
+                        <a href="{{ route('site.contact') }}" class="btn btn-primary-custom mt-4">
+                            <span>{{ $service->cta_text ?? 'Teklif Alın' }}</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -370,266 +145,8 @@
             </div>
         </div>
     </section>
+    @endforeach
 
-    <!-- UI/UX Design Service -->
-    <section class="service-detail section-padding" id="design">
-        <div class="container">
-            <div class="row align-items-center flex-lg-row-reverse">
-                <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-left">
-                    <div class="service-detail-img glass-effect">
-                        <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=700&q=80" alt="UI/UX Tasarım" class="img-fluid rounded">
-                    </div>
-                </div>
-                <div class="col-lg-6" data-aos="fade-right">
-                    <div class="service-detail-content">
-                        <span class="service-badge">Hizmet #4</span>
-                        <h2 class="service-detail-title">
-                            <span class="accent-text">UI/UX</span> Tasarım
-                        </h2>
-                        <p class="service-detail-text">
-                            Kullanıcı deneyimini ön planda tutan, estetik ve fonksiyonel arayüz tasarımları ile
-                            markanızı görsel olarak güçlendiriyoruz. Modern tasarım trendlerini takip ederek,
-                            kullanıcılarınızın severek kullanacağı dijital ürünler yaratıyoruz.
-                        </p>
-
-                        <div class="service-features-list">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Kullanıcı Araştırması</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Wireframe & Prototip</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Görsel Tasarım</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Interaktif Prototipler</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Kullanılabilirlik Testi</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Design System Oluşturma</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="service-tools mt-4">
-                            <h5 class="mb-3">Kullandığımız Araçlar:</h5>
-                            <div class="tool-icons">
-                                <span class="tool-icon" title="Figma"><i class="fas fa-pen-nib"></i> Figma</span>
-                                <span class="tool-icon" title="Adobe XD"><i class="fas fa-drafting-compass"></i> Adobe XD</span>
-                                <span class="tool-icon" title="Sketch"><i class="fas fa-layer-group"></i> Sketch</span>
-                                <span class="tool-icon" title="InVision"><i class="fas fa-lightbulb"></i> InVision</span>
-                            </div>
-                        </div>
-
-                        <a href="contact.html" class="btn btn-primary-custom mt-4">
-                            <span>Tasarım Talebi</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Cloud & DevOps Service -->
-    <section class="service-detail section-padding bg-dark-alt" id="cloud">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-right">
-                    <div class="service-detail-img glass-effect">
-                        <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=700&q=80" alt="Cloud & DevOps" class="img-fluid rounded">
-                    </div>
-                </div>
-                <div class="col-lg-6" data-aos="fade-left">
-                    <div class="service-detail-content">
-                        <span class="service-badge">Hizmet #5</span>
-                        <h2 class="service-detail-title">
-                            <span class="accent-text">Cloud</span> & DevOps
-                        </h2>
-                        <p class="service-detail-text">
-                            Ölçeklenebilir bulut altyapı çözümleri, CI/CD pipeline yönetimi ve sistem optimizasyonu ile
-                            işletmenizi geleceğe taşıyoruz. AWS, Azure, Google Cloud platformlarında uzman ekibimizle
-                            güvenli ve performanslı sistemler kuruyoruz.
-                        </p>
-
-                        <div class="service-features-list">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>AWS / Azure / GCP</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Kubernetes & Docker</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>CI/CD Pipeline</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Infrastructure as Code</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Monitoring & Logging</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Security & Compliance</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="service-benefits mt-4">
-                            <h5 class="mb-3">Avantajlar:</h5>
-                            <ul class="benefits-list">
-                                <li><i class="fas fa-arrow-right accent-text"></i> %99.9 Uptime Garantisi</li>
-                                <li><i class="fas fa-arrow-right accent-text"></i> Otomatik Ölçeklendirme</li>
-                                <li><i class="fas fa-arrow-right accent-text"></i> Maliyet Optimizasyonu</li>
-                                <li><i class="fas fa-arrow-right accent-text"></i> 24/7 Monitoring</li>
-                            </ul>
-                        </div>
-
-                        <a href="contact.html" class="btn btn-primary-custom mt-4">
-                            <span>Altyapı Danışmanlığı</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Digital Consulting Service -->
-    <section class="service-detail section-padding" id="consulting">
-        <div class="container">
-            <div class="row align-items-center flex-lg-row-reverse">
-                <div class="col-lg-6 mb-5 mb-lg-0" data-aos="fade-left">
-                    <div class="service-detail-img glass-effect">
-                        <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=700&q=80" alt="Dijital Danışmanlık" class="img-fluid rounded">
-                    </div>
-                </div>
-                <div class="col-lg-6" data-aos="fade-right">
-                    <div class="service-detail-content">
-                        <span class="service-badge">Hizmet #6</span>
-                        <h2 class="service-detail-title">
-                            <span class="accent-text">Dijital</span> Danışmanlık
-                        </h2>
-                        <p class="service-detail-text">
-                            Dijital dönüşüm süreçlerinizde stratejik danışmanlık, teknoloji seçimi ve proje yönetimi
-                            hizmetleri sunuyoruz. İşletmenizin dijital stratejisini oluşturuyor, doğru teknoloji
-                            yatırımları yapmanızı sağlıyoruz.
-                        </p>
-
-                        <div class="service-features-list">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Dijital Strateji</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Teknoloji Danışmanlığı</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Proje Yönetimi</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>İş Analizi</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>ROI Optimizasyonu</span>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="feature-item">
-                                        <i class="fas fa-check-circle accent-text"></i>
-                                        <span>Eğitim & Mentorluk</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="service-approach mt-4">
-                            <h5 class="mb-3">Danışmanlık Yaklaşımımız:</h5>
-                            <div class="approach-grid">
-                                <div class="approach-item glass-effect">
-                                    <i class="fas fa-search"></i>
-                                    <span>Analiz</span>
-                                </div>
-                                <div class="approach-item glass-effect">
-                                    <i class="fas fa-lightbulb"></i>
-                                    <span>Strateji</span>
-                                </div>
-                                <div class="approach-item glass-effect">
-                                    <i class="fas fa-cogs"></i>
-                                    <span>Uygulama</span>
-                                </div>
-                                <div class="approach-item glass-effect">
-                                    <i class="fas fa-chart-line"></i>
-                                    <span>Ölçümleme</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <a href="contact.html" class="btn btn-primary-custom mt-4">
-                            <span>Danışmanlık Talebi</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
     <section class="cta-section section-padding bg-dark-alt">
         <div class="container">
             <div class="row align-items-center">
@@ -642,7 +159,7 @@
                     </p>
                 </div>
                 <div class="col-lg-4 text-lg-end mt-4 mt-lg-0" data-aos="fade-left">
-                    <a href="contact.html" class="btn btn-primary-custom btn-lg">
+                    <a href="{{ route('site.contact') }}" class="btn btn-primary-custom btn-lg">
                         <span>Ücretsiz Görüşme</span>
                         <i class="fas fa-phone"></i>
                     </a>
@@ -650,5 +167,235 @@
             </div>
         </div>
     </section>
-
 @endsection
+
+@push('styles')
+<style>
+    /* Services Page Specific Styles */
+    .page-header {
+        padding: 180px 0 100px;
+        background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-light) 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .page-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(ellipse at center, var(--primary-glow) 0%, transparent 70%);
+        opacity: 0.3;
+    }
+
+    .page-title {
+        font-size: 60px;
+        font-weight: 900;
+        margin-bottom: 20px;
+    }
+
+    .page-description {
+        font-size: 20px;
+        color: var(--text-muted);
+        margin-bottom: 30px;
+    }
+
+    .breadcrumb {
+        background: transparent;
+        margin: 0;
+    }
+
+    .breadcrumb-item {
+        color: var(--text-secondary);
+    }
+
+    .breadcrumb-item.active {
+        color: var(--primary-color);
+    }
+
+    .breadcrumb-item + .breadcrumb-item::before {
+        color: var(--text-muted);
+    }
+
+    .breadcrumb-item a {
+        color: var(--text-secondary);
+    }
+
+    .breadcrumb-item a:hover {
+        color: var(--primary-color);
+    }
+
+    .service-overview-card {
+        display: block;
+        padding: 40px 30px;
+        border-radius: 20px;
+        text-align: center;
+        position: relative;
+        transition: var(--transition-fast);
+        height: 100%;
+    }
+
+    .service-overview-icon {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 36px;
+        color: var(--bg-primary);
+        margin: 0 auto 25px;
+        box-shadow: var(--shadow-glow);
+        transition: var(--transition-fast);
+    }
+
+    .service-overview-card:hover .service-overview-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .service-overview-title {
+        font-size: 22px;
+        margin-bottom: 12px;
+        color: var(--text-primary);
+    }
+
+    .service-overview-text {
+        font-size: 15px;
+        color: var(--text-muted);
+        margin-bottom: 20px;
+    }
+
+    .service-overview-arrow {
+        display: inline-block;
+        color: var(--primary-color);
+        transition: var(--transition-fast);
+    }
+
+    .service-overview-card:hover .service-overview-arrow {
+        transform: translateX(10px);
+    }
+
+    .service-detail-img {
+        padding: 15px;
+        border-radius: 20px;
+    }
+
+    .service-detail-img img {
+        border-radius: 15px;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .service-badge {
+        display: inline-block;
+        padding: 8px 20px;
+        background: var(--primary-color);
+        color: var(--bg-primary);
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+    }
+
+    .service-detail-title {
+        font-size: 42px;
+        margin-bottom: 20px;
+    }
+
+    .service-detail-text {
+        font-size: 16px;
+        color: var(--text-muted);
+        line-height: 1.8;
+        margin-bottom: 30px;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        font-size: 15px;
+        color: var(--text-secondary);
+        padding: 8px 0;
+    }
+
+    .feature-item i {
+        font-size: 18px;
+        margin-top: 2px;
+    }
+
+    .tech-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .tech-badge {
+        padding: 8px 18px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--primary-color);
+        color: var(--primary-color);
+        font-size: 13px;
+        font-weight: 600;
+        border-radius: 20px;
+        transition: var(--transition-fast);
+    }
+
+    .tech-badge:hover {
+        background: var(--primary-color);
+        color: var(--bg-primary);
+    }
+
+    .process-step {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 15px;
+    }
+
+    .process-number {
+        width: 40px;
+        height: 40px;
+        background: var(--primary-color);
+        color: var(--bg-primary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        flex-shrink: 0;
+    }
+
+    .process-text {
+        font-size: 14px;
+        color: var(--text-secondary);
+    }
+
+    .stat-mini {
+        padding: 25px 20px;
+        border-radius: 15px;
+        text-align: center;
+    }
+
+    .stat-mini-number {
+        font-size: 36px;
+        font-weight: 900;
+        font-family: var(--font-heading);
+        margin-bottom: 8px;
+    }
+
+    .stat-mini-label {
+        font-size: 13px;
+        color: var(--text-muted);
+        text-transform: uppercase;
+    }
+</style>
+@endpush

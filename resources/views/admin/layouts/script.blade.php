@@ -54,10 +54,12 @@
         $('.summernote').summernote({ height: 250 });
     });
 
-    var firstUpload = new FileUploadWithPreview('myFirstImage')
-    var secondUpload = new FileUploadWithPreview('mySecondImage')
-    var thirdUpload = new FileUploadWithPreview('myThirdImage')
-    var fourthUpload = new FileUploadWithPreview('myFourthImage')
+    $('.custom-file-container').each(function() {
+        var uploadId = $(this).attr('data-upload-id');
+        if (uploadId) {
+            new FileUploadWithPreview(uploadId);
+        }
+    });
 
     function deleteItem(key) {
         Swal.fire({

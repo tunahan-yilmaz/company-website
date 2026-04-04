@@ -1,8 +1,8 @@
 {{-- References Page --}}
 @extends('site.layouts.app')
 
-@section('title', 'Referanslar - DBS Software')
-@section('meta_description', 'DBS Software Referanslar - Birlikte çalıştığımız değerli markalar.')
+@section('title', 'Referanslarımız - DBS Software')
+@section('meta_description', 'DBS Software Referanslar - Değerli müşterilerimiz ve çözüm ortaklarımız.')
 
 @section('content')
     <!-- Page Header -->
@@ -14,11 +14,11 @@
                         <span class="accent-text glow-text">Referanslarımız</span>
                     </h1>
                     <p class="page-description">
-                        Dünya çapında tanınan markalar ve başarılı işbirlikleri
+                        Birlikte başardığımız, güvenin ve kalitenin kanıtı olan değerli müşterilerimiz.
                     </p>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center">
-                            <li class="breadcrumb-item"><a href="index.html">Anasayfa</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('site.home') }}">Ana Sayfa</a></li>
                             <li class="breadcrumb-item active">Referanslar</li>
                         </ol>
                     </nav>
@@ -74,7 +74,7 @@
         </div>
     </section>
 
-    <!-- References Section -->
+    <!-- References Grid -->
     <section class="references-section section-padding bg-dark-alt">
         <div class="container">
             <div class="section-header text-center mb-5" data-aos="fade-up">
@@ -87,222 +87,167 @@
                 </p>
             </div>
 
-            <!-- Reference Logos Grid -->
-            <div class="row g-4">
-                <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="100">
-                    <a href="https://www.example1.com" target="_blank" class="reference-card glass-effect">
-                        <div class="reference-logo">
-                            <div class="logo-placeholder">
-                                <i class="fas fa-building"></i>
-                                <span>Premium Corp</span>
-                            </div>
+            <div class="row g-4 justify-content-center">
+                @forelse($references as $i => $reference)
+                <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="{{ ($i % 4 + 1) * 100 }}">
+                    <div class="reference-person-card">
+                        <img src="{{ $reference->logo_image ? asset('storage/'.$reference->logo_image) : 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80' }}" alt="{{ $reference->name }}" class="person-img">
+                        <div class="person-overlay">
+                            <h4 class="person-name">{{ $reference->name }}</h4>
+                            @if($reference->description)
+                                <div class="person-info">{{ Str::limit($reference->description, 100) }}</div>
+                            @endif
                         </div>
-                        <div class="reference-name">Premium Corp</div>
-                    </a>
+                    </div>
                 </div>
-
-                <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="150">
-                    <a href="https://www.example2.com" target="_blank" class="reference-card glass-effect">
-                        <div class="reference-logo">
-                            <div class="logo-placeholder">
-                                <i class="fas fa-gem"></i>
-                                <span>Luxury Brand</span>
-                            </div>
-                        </div>
-                        <div class="reference-name">Luxury Brand</div>
-                    </a>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="200">
-                    <a href="https://www.example3.com" target="_blank" class="reference-card glass-effect">
-                        <div class="reference-logo">
-                            <div class="logo-placeholder">
-                                <i class="fas fa-crown"></i>
-                                <span>Elite Group</span>
-                            </div>
-                        </div>
-                        <div class="reference-name">Elite Group</div>
-                    </a>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="250">
-                    <a href="https://www.example4.com" target="_blank" class="reference-card glass-effect">
-                        <div class="reference-logo">
-                            <div class="logo-placeholder">
-                                <i class="fas fa-star"></i>
-                                <span>Star Tech</span>
-                            </div>
-                        </div>
-                        <div class="reference-name">Star Tech</div>
-                    </a>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="300">
-                    <a href="https://www.example5.com" target="_blank" class="reference-card glass-effect">
-                        <div class="reference-logo">
-                            <div class="logo-placeholder">
-                                <i class="fas fa-trophy"></i>
-                                <span>Excellence Inc</span>
-                            </div>
-                        </div>
-                        <div class="reference-name">Excellence Inc</div>
-                    </a>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="350">
-                    <a href="https://www.example6.com" target="_blank" class="reference-card glass-effect">
-                        <div class="reference-logo">
-                            <div class="logo-placeholder">
-                                <i class="fas fa-shield-alt"></i>
-                                <span>Trust Finance</span>
-                            </div>
-                        </div>
-                        <div class="reference-name">Trust Finance</div>
-                    </a>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="400">
-                    <a href="https://www.example7.com" target="_blank" class="reference-card glass-effect">
-                        <div class="reference-logo">
-                            <div class="logo-placeholder">
-                                <i class="fas fa-rocket"></i>
-                                <span>Innovation Labs</span>
-                            </div>
-                        </div>
-                        <div class="reference-name">Innovation Labs</div>
-                    </a>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="450">
-                    <a href="https://www.example8.com" target="_blank" class="reference-card glass-effect">
-                        <div class="reference-logo">
-                            <div class="logo-placeholder">
-                                <i class="fas fa-globe"></i>
-                                <span>Global Solutions</span>
-                            </div>
-                        </div>
-                        <div class="reference-name">Global Solutions</div>
-                    </a>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="500">
-                    <a href="https://www.example9.com" target="_blank" class="reference-card glass-effect">
-                        <div class="reference-logo">
-                            <div class="logo-placeholder">
-                                <i class="fas fa-laptop-code"></i>
-                                <span>TechCorp International</span>
-                            </div>
-                        </div>
-                        <div class="reference-name">TechCorp International</div>
-                    </a>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="550">
-                    <a href="https://www.example10.com" target="_blank" class="reference-card glass-effect">
-                        <div class="reference-logo">
-                            <div class="logo-placeholder">
-                                <i class="fas fa-university"></i>
-                                <span>FinanceHub Bank</span>
-                            </div>
-                        </div>
-                        <div class="reference-name">FinanceHub Bank</div>
-                    </a>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="600">
-                    <a href="https://www.example11.com" target="_blank" class="reference-card glass-effect">
-                        <div class="reference-logo">
-                            <div class="logo-placeholder">
-                                <i class="fas fa-shopping-cart"></i>
-                                <span>ShopMart Retail</span>
-                            </div>
-                        </div>
-                        <div class="reference-name">ShopMart Retail</div>
-                    </a>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="650">
-                    <a href="https://www.example12.com" target="_blank" class="reference-card glass-effect">
-                        <div class="reference-logo">
-                            <div class="logo-placeholder">
-                                <i class="fas fa-heartbeat"></i>
-                                <span>HealthPlus Clinic</span>
-                            </div>
-                        </div>
-                        <div class="reference-name">HealthPlus Clinic</div>
-                    </a>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="700">
-                    <a href="https://www.example13.com" target="_blank" class="reference-card glass-effect">
-                        <div class="reference-logo">
-                            <div class="logo-placeholder">
-                                <i class="fas fa-cloud"></i>
-                                <span>CloudTech Solutions</span>
-                            </div>
-                        </div>
-                        <div class="reference-name">CloudTech Solutions</div>
-                    </a>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="750">
-                    <a href="https://www.example14.com" target="_blank" class="reference-card glass-effect">
-                        <div class="reference-logo">
-                            <div class="logo-placeholder">
-                                <i class="fas fa-chart-bar"></i>
-                                <span>InvestPro Capital</span>
-                            </div>
-                        </div>
-                        <div class="reference-name">InvestPro Capital</div>
-                    </a>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="800">
-                    <a href="https://www.example15.com" target="_blank" class="reference-card glass-effect">
-                        <div class="reference-logo">
-                            <div class="logo-placeholder">
-                                <i class="fas fa-utensils"></i>
-                                <span>FoodHub Delivery</span>
-                            </div>
-                        </div>
-                        <div class="reference-name">FoodHub Delivery</div>
-                    </a>
-                </div>
-
-                <div class="col-lg-3 col-md-4 col-6" data-aos="fade-up" data-aos-delay="850">
-                    <a href="https://www.example16.com" target="_blank" class="reference-card glass-effect">
-                        <div class="reference-logo">
-                            <div class="logo-placeholder">
-                                <i class="fas fa-stethoscope"></i>
-                                <span>MediCare Network</span>
-                            </div>
-                        </div>
-                        <div class="reference-name">MediCare Network</div>
-                    </a>
-                </div>
+                @empty
+                    <div class="col-12 text-center text-muted py-5">
+                        <i class="fas fa-users fa-3x mb-3 opacity-25"></i>
+                        <p>Henüz referans eklenmemiş.</p>
+                    </div>
+                @endforelse
             </div>
-        </div>
-    </section>
 
-    <!-- CTA Section -->
-    <section class="cta-section section-padding">
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-8" data-aos="fade-right">
-                    <h2 class="section-title mb-3">
-                        Siz de Başarı <span class="accent-text">Hikayemize Katılın</span>
-                    </h2>
-                    <p class="lead mb-0">
-                        Projenizi birlikte başarıya taşıyalım ve mutlu müşterilerimize katılın
-                    </p>
-                </div>
-                <div class="col-lg-4 text-lg-end mt-4 mt-lg-0" data-aos="fade-left">
-                    <a href="contact.html" class="btn btn-primary-custom btn-lg">
-                        <span>Hemen Başlayın</span>
-                        <i class="fas fa-rocket"></i>
-                    </a>
-                </div>
+            <div class="text-center mt-5 pt-3" data-aos="fade-up">
+                <a href="{{ route('site.contact') }}" class="btn btn-primary-custom btn-lg">
+                    <span>Siz de Referansımız Olun</span>
+                    <i class="fas fa-handshake"></i>
+                </a>
             </div>
         </div>
     </section>
 @endsection
+
+@push('styles')
+<style>
+    .page-header {
+        padding: 180px 0 100px;
+        background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-light) 100%);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .page-header::before {
+        content: '';
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: radial-gradient(ellipse at center, var(--primary-glow) 0%, transparent 70%);
+        opacity: 0.3;
+    }
+
+    .page-title {
+        font-size: 60px;
+        font-weight: 900;
+        margin-bottom: 20px;
+    }
+
+    .page-description {
+        font-size: 20px;
+        color: var(--text-muted);
+        margin-bottom: 30px;
+    }
+
+    .breadcrumb {
+        background: transparent;
+        margin: 0;
+    }
+
+    .breadcrumb-item {
+        color: var(--text-secondary);
+    }
+
+    .breadcrumb-item.active {
+        color: var(--primary-color);
+    }
+
+    .breadcrumb-item + .breadcrumb-item::before {
+        color: var(--text-muted);
+    }
+
+    .breadcrumb-item a {
+        color: var(--text-secondary);
+        text-decoration: none;
+    }
+
+    .breadcrumb-item a:hover {
+        color: var(--primary-color);
+    }
+
+    /* Reference Card - Responsive Square Flip Style */
+    .reference-person-card {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        aspect-ratio: 1 / 1;
+        cursor: pointer;
+        border: none;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    }
+
+    .person-img {
+        max-width: 80%;
+        max-height: 80%;
+        object-fit: contain;
+        transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s;
+    }
+
+    .person-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(15, 23, 42, 0.95);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 25px;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+
+    .reference-person-card:hover .person-overlay {
+        opacity: 1;
+    }
+
+    .reference-person-card:hover .person-img {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    .person-name {
+        color: #ffffff;
+        font-size: 1.3rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+        transform: translateY(15px);
+        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .person-info {
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 0.95rem;
+        line-height: 1.5;
+        transform: translateY(15px);
+        transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transition-delay: 0.05s;
+    }
+
+    .reference-person-card:hover .person-name,
+    .reference-person-card:hover .person-info {
+        transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+        .page-title {
+            font-size: 42px;
+        }
+    }
+</style>
+@endpush
